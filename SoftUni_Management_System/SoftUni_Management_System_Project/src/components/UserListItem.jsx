@@ -1,3 +1,5 @@
+import { fromIsoData } from "../../utils/DataTimeUtils";
+
 export default function UserListItem({
   id,
   firstName,
@@ -17,7 +19,7 @@ export default function UserListItem({
       <td>{email}</td>
       <td>{phoneNumber}</td>
       {/* Fix this date */}
-      <td>{createdAt}</td>
+      <td>{fromIsoData(createdAt)}</td>
 
       <td className="actions">
         <button className="btn edit-btn" title="Edit">
