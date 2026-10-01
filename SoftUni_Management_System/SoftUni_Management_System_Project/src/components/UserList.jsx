@@ -1,6 +1,6 @@
 import UserListItem from "./UserListItem";
 
-export default function UserList({ users }) {
+export default function UserList({ users, addUserClickHandler }) {
   return (
     <>
       <div className="table-wrapper">
@@ -13,7 +13,9 @@ export default function UserList({ users }) {
           </tbody>
         </table>
       </div>
-      <button className="btn-add btn">Add new user</button>
+      <button className="btn-add btn" onClick={addUserClickHandler}>
+        Add new user
+      </button>
     </>
   );
 }
