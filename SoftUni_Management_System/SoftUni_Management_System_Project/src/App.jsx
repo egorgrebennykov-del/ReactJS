@@ -16,12 +16,7 @@ function App() {
   const [showSaveUserModal, setShowUserModal] = useState(false);
 
   useEffect(() => {
-    fetch(baseUrl, {
-      headers: {
-        apikey: apiKey,
-      },
-    })
-      .then((res) => res.json())
+    fetchUsers()
       .then((data) => setUsers(data))
       .catch((error) => console.error("Error fetching users:", error));
   }, []);
@@ -34,24 +29,28 @@ function App() {
     setShowUserModal(false);
   };
 
-  const submitUserHandler = (user) => {
-    fetch(baseUrl, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        apiKey: apiKey,
-      },
-      body: JSON.stringify(user),
-    })
-      .then((res) => {
-        if (!res.ok) {
-          throw new Error(`Request failed with status ${res.status}`);
-        }
+  const submitUserHandler = async (user) => {
+    try {
+      const res = await fetch(baseUrl, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          apikey: apiKey,
+        },
+        body: JSON.stringify(user),
+      });
 
-        return res.text();
-      })
-      .then((response) => console.log(response))
-      .catch((error) => alert(`Error adding user: ${error.message}`));
+      if (!res.ok) {
+        throw new Error(`Request failed with status ${res.status}`);
+      }
+
+      const updatedUsers = await fetchUsers();
+
+      setUsers(updatedUsers);
+      setShowUserModal(false);
+    } catch (error) {
+      alert(`Error adding user: ${error.message}`);
+    }
   };
 
   return (
@@ -77,6 +76,18 @@ function App() {
       </>
     </>
   );
+}
+
+async function fetchUsers() {
+  const response = await fetch(baseUrl, {
+    headers: {
+      apikey: apiKey,
+    },
+  });
+
+  const data = await response.json();
+
+  return data;
 }
 
 export default App;
