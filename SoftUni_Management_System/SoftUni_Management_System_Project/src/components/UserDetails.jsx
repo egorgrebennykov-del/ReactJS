@@ -1,18 +1,20 @@
-export default function UserDetails() {
+import { fromIsoData } from "../../utils/dataTimeUtils.js";
+
+export default function UserDetails({ onClose, userInfo }) {
   return (
-    <div class="overlay">
-      <div class="backdrop"></div>
-      <div class="modal">
-        <div class="detail-container">
-          <header class="headers">
+    <div className="overlay">
+      <div className="backdrop"></div>
+      <div className="modal">
+        <div className="detail-container">
+          <header className="headers">
             <h2>User Detail</h2>
-            <button class="btn close">
+            <button className="btn close" onClick={onClose}>
               <svg
                 aria-hidden="true"
                 focusable="false"
                 data-prefix="fas"
                 data-icon="xmark"
-                class="svg-inline--fa fa-xmark"
+                className="svg-inline--fa fa-xmark"
                 role="img"
                 xmlns="http://www.w3.org/2000/svg"
                 viewBox="0 0 320 512"
@@ -24,35 +26,42 @@ export default function UserDetails() {
               </svg>
             </button>
           </header>
-          <div class="content">
-            <div class="image-container">
+          <div className="content">
+            <div className="image-container">
               <img
-                src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460__340.png"
-                alt=""
-                class="image"
+                src={userInfo.imageURL}
+                alt={`${userInfo.firstName}'s profile`}
+                className="image"
               />
             </div>
-            <div class="user-details">
+            <div className="user-details">
               <p>
-                User Id: <strong>62bb0c0eda039e2fdccba57b</strong>
+                User Id: <strong>{userInfo.id}</strong>
               </p>
               <p>
                 Full Name:
-                <strong> Peter Johnson </strong>
+                <strong>
+                  {" "}
+                  {userInfo.firstName} {userInfo.lastName}{" "}
+                </strong>
               </p>
               <p>
-                Email: <strong>peter@abv.bg</strong>
+                Email: <strong>{userInfo.email}</strong>
               </p>
               <p>
-                Phone Number: <strong>0812345678</strong>
+                Phone Number: <strong>{userInfo.phoneNumber}</strong>
               </p>
               <p>
                 Address:
-                <strong> Bulgaria, Sofia, Aleksandar Malinov 78 </strong>
+                <strong>
+                  {" "}
+                  {userInfo.adress?.country}, {userInfo.adress?.city},{" "}
+                  {userInfo.adress?.street} {userInfo.adress?.streetNumber}{" "}
+                </strong>
               </p>
 
               <p>
-                Created on: <strong>Wednesday, June 28, 2022</strong>
+                Created on: <strong>{fromIsoData(userInfo.createdAt)}</strong>
               </p>
               <p>
                 Modified on: <strong>Thursday, June 29, 2022</strong>

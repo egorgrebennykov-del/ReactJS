@@ -7,6 +7,7 @@ import UserSearch from "./components/UserSearch";
 import Pagination from "./components/Pagination";
 import { useEffect, useState } from "react";
 import SaveUserModal from "./components/SaveUserModal";
+import UserDetails from "./components/UserDetails";
 
 const baseUrl = "https://tdyhrjbjvmtyyxgysxss.supabase.co/rest/v1/users";
 const apiKey = "sb_publishable_tBbp2YcHXaaEzqY072-9Ng_q7ay_OVp";
@@ -14,6 +15,8 @@ const apiKey = "sb_publishable_tBbp2YcHXaaEzqY072-9Ng_q7ay_OVp";
 function App() {
   const [users, setUsers] = useState([]);
   const [showSaveUserModal, setShowUserModal] = useState(false);
+  const [showUserDetailsModal, setShowUserDetailsModal] = useState(false);
+  const [selectedUser, setSelectedUser] = useState(null);
 
   useEffect(() => {
     fetchUsers()
@@ -53,6 +56,17 @@ function App() {
     }
   };
 
+  const userDetailsHandler = (userId) => {
+    const user = users.find((u) => u.id === userId);
+
+    setSelectedUser(user);
+    setShowUserDetailsModal(true);
+  };
+
+  const userDetailsCloseHandler = () => {
+    setShowUserDetailsModal(false);
+  };
+
   return (
     <>
       <>
@@ -61,7 +75,17 @@ function App() {
         <main className="main">
           <section className="card users-container">
             <UserSearch />
-            <UserList users={users} addUserClickHandler={addUserClickHandler} />
+            <UserList
+              users={users}
+              addUserClickHandler={addUserClickHandler}
+              userDetailsHandler={userDetailsHandler}
+            />
+            {showUserDetailsModal && (
+              <UserDetails
+                userInfo={selectedUser}
+                onClose={userDetailsCloseHandler}
+              />
+            )}
             {showSaveUserModal && (
               <SaveUserModal
                 addUserCloseHandler={addUserCloseHandler}

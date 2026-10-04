@@ -1,6 +1,10 @@
 import UserListItem from "./UserListItem";
 
-export default function UserList({ users, addUserClickHandler }) {
+export default function UserList({
+  users,
+  addUserClickHandler,
+  userDetailsHandler,
+}) {
   return (
     <>
       <div className="table-wrapper">
@@ -8,7 +12,11 @@ export default function UserList({ users, addUserClickHandler }) {
           <thead></thead>
           <tbody>
             {users.map((user) => (
-              <UserListItem key={user.id} {...user} />
+              <UserListItem
+                key={user.id}
+                userDetailsHandler={userDetailsHandler}
+                {...user}
+              />
             ))}
           </tbody>
         </table>
