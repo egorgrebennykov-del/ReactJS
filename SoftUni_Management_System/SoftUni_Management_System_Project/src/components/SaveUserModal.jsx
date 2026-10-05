@@ -1,4 +1,10 @@
-export default function SaveUserModal({ addUserCloseHandler, onSubmit }) {
+export default function SaveUserModal({
+  addUserCloseHandler,
+  onSubmit,
+  userInfo,
+  edit,
+}) {
+  const user = edit ? userInfo : {};
   const submitHandler = (e) => {
     e.preventDefault();
 
@@ -27,7 +33,7 @@ export default function SaveUserModal({ addUserCloseHandler, onSubmit }) {
       <div className="modal">
         <div className="user-container">
           <header className="headers">
-            <h2>Add User</h2>
+            <h2>{edit ? "Edit User" : "Add User"}</h2>
             <button className="btn close" onClick={addUserCloseHandler}>
               <svg
                 aria-hidden="true"
@@ -54,7 +60,12 @@ export default function SaveUserModal({ addUserCloseHandler, onSubmit }) {
                   <span>
                     <i className="fa-solid fa-user"></i>
                   </span>
-                  <input id="firstName" name="firstName" type="text" />
+                  <input
+                    id="firstName"
+                    name="firstName"
+                    type="text"
+                    defaultValue={user.firstName}
+                  />
                 </div>
               </div>
               <div className="form-group">
@@ -63,7 +74,12 @@ export default function SaveUserModal({ addUserCloseHandler, onSubmit }) {
                   <span>
                     <i className="fa-solid fa-user"></i>
                   </span>
-                  <input id="lastName" name="lastName" type="text" />
+                  <input
+                    id="lastName"
+                    name="lastName"
+                    type="text"
+                    defaultValue={user.lastName}
+                  />
                 </div>
               </div>
             </div>
@@ -75,7 +91,12 @@ export default function SaveUserModal({ addUserCloseHandler, onSubmit }) {
                   <span>
                     <i className="fa-solid fa-envelope"></i>
                   </span>
-                  <input id="email" name="email" type="text" />
+                  <input
+                    id="email"
+                    name="email"
+                    type="text"
+                    defaultValue={user.email}
+                  />
                 </div>
               </div>
               <div className="form-group">
@@ -84,7 +105,12 @@ export default function SaveUserModal({ addUserCloseHandler, onSubmit }) {
                   <span>
                     <i className="fa-solid fa-phone"></i>
                   </span>
-                  <input id="phoneNumber" name="phoneNumber" type="text" />
+                  <input
+                    id="phoneNumber"
+                    name="phoneNumber"
+                    type="text"
+                    defaultValue={user.phoneNumber}
+                  />
                 </div>
               </div>
             </div>
@@ -95,7 +121,12 @@ export default function SaveUserModal({ addUserCloseHandler, onSubmit }) {
                 <span>
                   <i className="fa-solid fa-image"></i>
                 </span>
-                <input id="imageURL" name="imageURL" type="text" />
+                <input
+                  id="imageURL"
+                  name="imageURL"
+                  type="text"
+                  defaultValue={user.imageURL}
+                />
               </div>
             </div>
 
@@ -106,7 +137,12 @@ export default function SaveUserModal({ addUserCloseHandler, onSubmit }) {
                   <span>
                     <i className="fa-solid fa-map"></i>
                   </span>
-                  <input id="country" name="country" type="text" />
+                  <input
+                    id="country"
+                    name="country"
+                    type="text"
+                    defaultValue={user.adress?.country}
+                  />
                 </div>
               </div>
               <div className="form-group">
@@ -115,7 +151,12 @@ export default function SaveUserModal({ addUserCloseHandler, onSubmit }) {
                   <span>
                     <i className="fa-solid fa-city"></i>
                   </span>
-                  <input id="city" name="city" type="text" />
+                  <input
+                    id="city"
+                    name="city"
+                    type="text"
+                    defaultValue={user.adress?.city}
+                  />
                 </div>
               </div>
             </div>
@@ -127,7 +168,12 @@ export default function SaveUserModal({ addUserCloseHandler, onSubmit }) {
                   <span>
                     <i className="fa-solid fa-map"></i>
                   </span>
-                  <input id="street" name="street" type="text" />
+                  <input
+                    id="street"
+                    name="street"
+                    type="text"
+                    defaultValue={user.adress?.street}
+                  />
                 </div>
               </div>
               <div className="form-group">
@@ -136,7 +182,12 @@ export default function SaveUserModal({ addUserCloseHandler, onSubmit }) {
                   <span>
                     <i className="fa-solid fa-house-chimney"></i>
                   </span>
-                  <input id="streetNumber" name="streetNumber" type="text" />
+                  <input
+                    id="streetNumber"
+                    name="streetNumber"
+                    type="text"
+                    defaultValue={user.adress?.streetNumber}
+                  />
                 </div>
               </div>
             </div>
@@ -144,7 +195,12 @@ export default function SaveUserModal({ addUserCloseHandler, onSubmit }) {
               <button id="action-save" className="btn" type="submit">
                 Save
               </button>
-              <button id="action-cancel" className="btn" type="button">
+              <button
+                id="action-cancel"
+                className="btn"
+                type="button"
+                onClick={addUserCloseHandler}
+              >
                 Cancel
               </button>
             </div>

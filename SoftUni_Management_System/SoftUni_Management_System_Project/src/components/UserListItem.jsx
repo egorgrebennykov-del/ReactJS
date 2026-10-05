@@ -9,6 +9,7 @@ export default function UserListItem({
   createdAt,
   userDetailsHandler,
   userDeleteHandler,
+  editUserHandler,
   imageURL,
 }) {
   return (
@@ -20,11 +21,15 @@ export default function UserListItem({
       <td>{lastName}</td>
       <td>{email}</td>
       <td>{phoneNumber}</td>
-      {/* Fix this date */}
+
       <td>{fromIsoData(createdAt)}</td>
 
       <td className="actions">
-        <button className="btn edit-btn" title="Edit">
+        <button
+          className="btn edit-btn"
+          title="Edit"
+          onClick={() => editUserHandler(id)}
+        >
           <svg
             aria-hidden="true"
             focusable="false"

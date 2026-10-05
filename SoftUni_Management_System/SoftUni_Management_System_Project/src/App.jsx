@@ -18,6 +18,7 @@ function App() {
   const [showUserDetailsModal, setShowUserDetailsModal] = useState(false);
   const [selectedUser, setSelectedUser] = useState(null);
   const [showDeleteUser, setShowDeleteUser] = useState(false);
+  const [showEditUser, setShowEditUser] = useState(false);
 
   useEffect(() => {
     fetchUsers()
@@ -79,6 +80,41 @@ function App() {
     setShowDeleteUser(false);
   };
 
+  const editUserHandler = (userId) => {
+    const user = users.find((u) => u.id === userId);
+
+    setSelectedUser(user);
+    setShowEditUser(true);
+  };
+
+  const editUserCloseHandler = () => {
+    setShowEditUser(false);
+  };
+
+  const updateUserHandler = async (user) => {
+    try {
+      const res = await fetch(`${baseUrl}?id=eq.${selectedUser.id}`, {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+          apikey: apiKey,
+        },
+        body: JSON.stringify(user),
+      });
+
+      if (!res.ok) {
+        throw new Error(`Request failed with status ${res.status}`);
+      }
+
+      const updatedUsers = await fetchUsers();
+
+      setUsers(updatedUsers);
+      setShowEditUser(false);
+    } catch (error) {
+      alert(`Error updating user: ${error.message}`);
+    }
+  };
+
   const deleteUser = async () => {
     try {
       const res = await fetch(`${baseUrl}?id=eq.${selectedUser.id}`, {
@@ -114,6 +150,7 @@ function App() {
               addUserClickHandler={addUserClickHandler}
               userDetailsHandler={userDetailsHandler}
               userDeleteHandler={userDeleteHandler}
+              editUserHandler={editUserHandler}
             />
             {showUserDetailsModal && (
               <UserDetails
@@ -131,6 +168,14 @@ function App() {
               <UserDeleteModal
                 userDeleteCloseHandler={userDeleteCloseHandler}
                 onDelete={deleteUser}
+              />
+            )}
+            {showEditUser && (
+              <SaveUserModal
+                addUserCloseHandler={editUserCloseHandler}
+                onSubmit={updateUserHandler}
+                userInfo={selectedUser}
+                edit
               />
             )}
             <Pagination />

@@ -5,6 +5,7 @@ export default function UserList({
   addUserClickHandler,
   userDetailsHandler,
   userDeleteHandler,
+  editUserHandler,
 }) {
   return (
     <>
@@ -17,6 +18,7 @@ export default function UserList({
                 key={user.id}
                 userDetailsHandler={userDetailsHandler}
                 userDeleteHandler={userDeleteHandler}
+                editUserHandler={editUserHandler}
                 {...user}
               />
             ))}
