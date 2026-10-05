@@ -1,18 +1,18 @@
-export default function UserDeleteModal() {
+export default function UserDeleteModal({ userDeleteCloseHandler, onDelete }) {
   return (
-    <div class="overlay">
-      <div class="backdrop"></div>
-      <div class="modal">
-        <div class="confirm-container">
-          <header class="headers">
+    <div className="overlay">
+      <div className="backdrop"></div>
+      <div className="modal">
+        <div className="confirm-container">
+          <header className="headers">
             <h2>Are you sure you want to delete this account?</h2>
-            <button class="btn close">
+            <button className="btn close" onClick={userDeleteCloseHandler}>
               <svg
                 aria-hidden="true"
                 focusable="false"
                 data-prefix="fas"
                 data-icon="xmark"
-                class="svg-inline--fa fa-xmark"
+                className="svg-inline--fa fa-xmark"
                 role="img"
                 xmlns="http://www.w3.org/2000/svg"
                 viewBox="0 0 320 512"
@@ -24,12 +24,22 @@ export default function UserDeleteModal() {
               </svg>
             </button>
           </header>
-          <div class="actions">
+          <div className="actions">
             <div id="form-actions">
-              <button id="action-save" class="btn" type="submit">
+              <button
+                id="action-save"
+                className="btn"
+                type="button"
+                onClick={onDelete}
+              >
                 Delete
               </button>
-              <button id="action-cancel" class="btn" type="button">
+              <button
+                id="action-cancel"
+                className="btn"
+                type="button"
+                onClick={userDeleteCloseHandler}
+              >
                 Cancel
               </button>
             </div>

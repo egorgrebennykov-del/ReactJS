@@ -1,4 +1,4 @@
-import { fromIsoData } from "../../utils/DataTimeUtils";
+import { fromIsoData } from "../../utils/dataTimeUtils.js";
 
 export default function UserListItem({
   id,
@@ -8,6 +8,7 @@ export default function UserListItem({
   phoneNumber,
   createdAt,
   userDetailsHandler,
+  userDeleteHandler,
   imageURL,
 }) {
   return (
@@ -40,7 +41,11 @@ export default function UserListItem({
             ></path>
           </svg>
         </button>
-        <button className="btn delete-btn" title="Delete">
+        <button
+          className="btn delete-btn"
+          title="Delete"
+          onClick={() => userDeleteHandler(id)}
+        >
           <svg
             aria-hidden="true"
             focusable="false"

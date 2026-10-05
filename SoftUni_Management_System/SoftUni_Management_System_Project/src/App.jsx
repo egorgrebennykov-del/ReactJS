@@ -17,6 +17,7 @@ function App() {
   const [showSaveUserModal, setShowUserModal] = useState(false);
   const [showUserDetailsModal, setShowUserDetailsModal] = useState(false);
   const [selectedUser, setSelectedUser] = useState(null);
+  const [showDeleteUser, setShowDeleteUser] = useState(false);
 
   useEffect(() => {
     fetchUsers()
@@ -67,6 +68,39 @@ function App() {
     setShowUserDetailsModal(false);
   };
 
+  const userDeleteHandler = (userId) => {
+    const user = users.find((u) => u.id === userId);
+
+    setSelectedUser(user);
+    setShowDeleteUser(true);
+  };
+
+  const userDeleteCloseHandler = () => {
+    setShowDeleteUser(false);
+  };
+
+  const deleteUser = async () => {
+    try {
+      const res = await fetch(`${baseUrl}?id=eq.${selectedUser.id}`, {
+        method: "DELETE",
+        headers: {
+          apikey: apiKey,
+        },
+      });
+
+      if (!res.ok) {
+        throw new Error(`Request failed with status ${res.status}`);
+      }
+
+      const updatedUsers = await fetchUsers();
+
+      setUsers(updatedUsers);
+      setShowDeleteUser(false);
+    } catch (error) {
+      alert(`Error deleting user: ${error.message}`);
+    }
+  };
+
   return (
     <>
       <>
@@ -79,6 +113,7 @@ function App() {
               users={users}
               addUserClickHandler={addUserClickHandler}
               userDetailsHandler={userDetailsHandler}
+              userDeleteHandler={userDeleteHandler}
             />
             {showUserDetailsModal && (
               <UserDetails
@@ -90,6 +125,12 @@ function App() {
               <SaveUserModal
                 addUserCloseHandler={addUserCloseHandler}
                 onSubmit={submitUserHandler}
+              />
+            )}
+            {showDeleteUser && (
+              <UserDeleteModal
+                userDeleteCloseHandler={userDeleteCloseHandler}
+                onDelete={deleteUser}
               />
             )}
             <Pagination />
